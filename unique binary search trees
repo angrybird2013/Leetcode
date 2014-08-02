@@ -8,3 +8,14 @@ class Solution:
             for i in range(n):
                 r += self.numTrees(i) * self.numTrees(n-1-i)
             return r
+
+class Solution:
+    # @return an integer
+    def numTrees(self, n):
+        a = [1 for i in range(n+1)]
+        for i in range(2, n+1):
+            t = 0
+            for k in range(i):
+                t += a[k] * a[i-1-k]
+            a[i] = t
+        return a[n]
