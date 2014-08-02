@@ -1,0 +1,13 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def maxSubArray(self, A):
+        r, t = A[0], 0
+        for i in A:
+            if i + t > 0:
+                t = i + t
+                r = max(r, t)
+            else:
+                t = 0
+            r = max(r, i)
+        return r
