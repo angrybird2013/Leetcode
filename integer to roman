@@ -1,0 +1,19 @@
+class Solution:
+    # @return a string
+    def intToRoman(self, num):
+        s, c, scale = "", ['M', 'D', 'C', 'L', 'X', 'V', 'I'], 1000
+        for i in range(4):
+            d = int(num / scale)
+            if 0 < d <=3:
+                s += d * c[2*i]
+            elif d == 4:
+                s += c[2*i] + c[2*i-1]
+            elif d == 5:
+                s += c[2*i-1]
+            elif 5 < d <= 8:
+                s += c[2*i-1] + (d - 5) * c[2*i]
+            elif d == 9:
+                s += c[2*i] + c[2*i-2]
+            num %= scale
+            scale /= 10
+        return s
