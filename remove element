@@ -1,0 +1,13 @@
+class Solution:
+    # @param    A       a list of integers
+    # @param    elem    an integer, value need to be removed
+    # @return an integer
+    def removeElement(self, A, elem):
+        i, j = 0, len(A)
+        while i < j:
+            if A[i] == elem:
+                j -= 1
+                A[i] = A[j]
+            else:
+                i += 1
+        return j
