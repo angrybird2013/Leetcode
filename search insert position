@@ -1,0 +1,16 @@
+class Solution:
+    # @param A, a list of integers
+    # @param target, an integer to be inserted
+    # @return integer
+    def searchInsert(self, A, target):
+        n = len(A)
+        if n == 0:
+            return 0
+        else:
+            mid = A[n/2]
+            if mid == target:
+                return n/2
+            elif mid > target:
+                return self.searchInsert(A[:n/2], target)
+            else:
+                return n/2 + 1 + self.searchInsert(A[n/2+1:], target)
