@@ -1,0 +1,11 @@
+class Solution:
+    # @param A, a list of integer
+    # @return an integer
+    def singleNumber(self, A):
+        b1, b2, b3 = 0, 0, 0
+        for i in A:
+            b2 |= i & b1
+            b1 = i ^ b1
+            b3 = ~(b1 & b2)
+            b1, b2 = b1 & b3, b2 & b3
+        return b1
