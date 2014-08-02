@@ -1,0 +1,10 @@
+class Solution:
+    # @param a list of integers
+    # @return an integer
+    def removeDuplicates(self, A):
+        i = 1
+        for j in range(len(A)):
+            if A[i-1] != A[j]:
+                A[i] = A[j]
+                i += 1
+        return min(i, len(A))
