@@ -1,0 +1,10 @@
+class Solution:
+    # @return an integer
+    def numTrees(self, n):
+        if n <= 1:
+            return 1
+        else:
+            r = 0
+            for i in range(n):
+                r += self.numTrees(i) * self.numTrees(n-1-i)
+            return r
