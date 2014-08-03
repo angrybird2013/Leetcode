@@ -1,0 +1,11 @@
+class Solution:
+    # @param prices, a list of integer
+    # @return an integer
+    def maxProfit(self, prices):
+        profit, low = 0, None
+        for p in prices:
+            if low is None or p < low:
+                low = p
+            else:
+                profit = max(profit, p - low)
+        return profit
