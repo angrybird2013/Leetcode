@@ -1,0 +1,16 @@
+class Solution:
+    # @param num, a list of integer
+    # @return a list of lists of integers
+    def permutation(self, s, num):
+        if len(num) == 0:
+            return [s]
+        r = []
+        for i in range(len(num)):
+            t = num[i]
+            del num[i]
+            r += self.permutation(s + [t], num)
+            num.insert(i, t)
+        return r
+    
+    def permute(self, num):
+        return self.permutation([], num)
