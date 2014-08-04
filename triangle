@@ -1,0 +1,12 @@
+class Solution:
+    # @param triangle, a list of lists of integers
+    # @return an integer
+    def minimumTotal(self, triangle):
+        n = len(triangle)
+        if n == 0:
+            return 0
+        r = [triangle[n-1][i] for i in range(n)]
+        for i in range(n-1, 0, -1):
+            for j in range(i):
+                r[j] = triangle[i-1][j] + min(r[j], r[j+1])
+        return r[0]
