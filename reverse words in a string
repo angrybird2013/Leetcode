@@ -1,0 +1,13 @@
+class Solution:
+    # @param s, a string
+    # @return a string
+    def reverseWords(self, s):
+        words = s.split(' ')
+        str = ""
+        for word in words:
+            if len(word) > 0:
+                str = word + ' ' + str
+        if len(str) > 0:
+            return str[:-1]
+        else:
+            return str
