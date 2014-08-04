@@ -1,0 +1,22 @@
+class Solution:
+    # @param strs, a list of strings
+    # @return a list of strings
+    def letter(self, str):
+        s = 26 * [0]
+        for c in str:
+            s[ord(c) - ord('a')] += 1
+        return tuple(i for i in s)
+    
+    def anagrams(self, strs):
+        d = {}
+        for str in strs:
+            key = self.letter(str)
+            if key in d:
+                d[key] += [str]
+            else:
+                d[key] = [str]
+        r = []
+        for v in d.values():
+            if len(v) > 1:
+                r += v
+        return r
