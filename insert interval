@@ -9,40 +9,25 @@ class Solution:
     # @param newInterval, a Interval
     # @return a list of Interval
     def insert(self, intervals, newInterval):
-        if len(intervals) == 0:
-            return [newInterval]
-        low, high = newInterval.start, newInterval.end
-        p, overlap = None, False
-        for i in range(len(intervals)):
+        i, p = 0, newInterval
+        while p and i < len(intervals):
             t = intervals[i]
-            if p is None and low < t.start:
-                p, overlap = i, False
-            elif p is None and low <= t.end:
-                p, overlap = i, True
-            if high < t.start:
-                if overlap:
-                    intervals[p].end = high
-                    del intervals[p+1:i]
-                    return intervals
-                else:
-                    del intervals[p:i]
-                    intervals.insert(p, newInterval)
-                    return intervals
-            elif high <= t.end:
-                if overlap:
-                    intervals[i].start = intervals[p].start
-                    del intervals[p:i]
-                    return intervals
-                else:
-                    intervals[i].start = low
-                    del intervals[p:i]
-                    return intervals
-        if p is None:
-            return intervals + [newInterval]
-        elif overlap:
-            intervals[p].end = high
-            del intervals[p+1:]
-            return intervals
-        else:
-            del intervals[p:]
-            return intervals + [newInterval]
+            if t.end < p.start:
+                i += 1
+            elif p.end < t.start:
+                intervals.insert(i, p)
+                p = None
+            elif t.start <= p.start and p.end <= t.end:
+                p = None
+            elif t.start <= p.start and t.end < p.end:
+                t.end, p = p.end, t
+                del intervals[i]
+            elif p.start < t.start and p.end <= t.end:
+                t.start = p.start
+                p = None
+            elif p.start < t.start and t.end < p.end:
+                t.start, t.end, p = p.start, p.end, t
+                del intervals[i]
+        if p is not None:
+            intervals += [p]
+        return intervals
