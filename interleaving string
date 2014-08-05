@@ -1,0 +1,18 @@
+class Solution:
+    # @return a boolean
+    def isInterleave(self, s1, s2, s3):
+        l1, l2, l3 = len(s1), len(s2), len(s3)
+        if l1 + l2 != l3:
+            return False
+        elif l1 == 0:
+            return s2 == s3
+        elif l2 == 0:
+            return s1 == s3
+        r = (l1+1) * [(l2+1) * [False]]
+        for j in range(1, l2+1):
+            r[0][j] = s2[:j] == s3[:j]
+        for i in range(1, l1+1):
+            r[i][0] = s1[:i] == s3[:i]
+            for j in range(1, l2+1):
+                r[i][j] = s1[i-1] == s3[i+j-1] and r[i-1][j] or s2[j-1] == s3[i+j-1] and r[i][j-1]
+        return r[l1][l2]
