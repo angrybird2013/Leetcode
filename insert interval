@@ -1,0 +1,48 @@
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution:
+    # @param intervals, a list of Intervals
+    # @param newInterval, a Interval
+    # @return a list of Interval
+    def insert(self, intervals, newInterval):
+        if len(intervals) == 0:
+            return [newInterval]
+        low, high = newInterval.start, newInterval.end
+        p, overlap = None, False
+        for i in range(len(intervals)):
+            t = intervals[i]
+            if p is None and low < t.start:
+                p, overlap = i, False
+            elif p is None and low <= t.end:
+                p, overlap = i, True
+            if high < t.start:
+                if overlap:
+                    intervals[p].end = high
+                    del intervals[p+1:i]
+                    return intervals
+                else:
+                    del intervals[p:i]
+                    intervals.insert(p, newInterval)
+                    return intervals
+            elif high <= t.end:
+                if overlap:
+                    intervals[i].start = intervals[p].start
+                    del intervals[p:i]
+                    return intervals
+                else:
+                    intervals[i].start = low
+                    del intervals[p:i]
+                    return intervals
+        if p is None:
+            return intervals + [newInterval]
+        elif overlap:
+            intervals[p].end = high
+            del intervals[p+1:]
+            return intervals
+        else:
+            del intervals[p:]
+            return intervals + [newInterval]
