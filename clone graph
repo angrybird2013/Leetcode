@@ -1,0 +1,32 @@
+# Definition for a undirected graph node
+# class UndirectedGraphNode:
+#     def __init__(self, x):
+#         self.label = x
+#         self.neighbors = []
+
+class Solution:
+    # @param node, a undirected graph node
+    # @return a undirected graph node
+    def cloneGraph(self, node):
+        if node is None:
+            return None
+        s, dict, added = [node], {}, set()
+        while len(s) > 0:
+            p, s = s[0], s[1:]
+            t = UndirectedGraphNode(p.label)
+            dict[p] = t
+            added.add(p)
+            for k in p.neighbors:
+                if k not in added:
+                    s += [k]
+        s, added = [node], set()
+        while len(s) > 0:
+            p, s = s[0], s[1:]
+            t = dict[p]
+            t.neighbors = []
+            added.add(p)
+            for k in p.neighbors:
+                t.neighbors += [dict[k]]
+                if k not in added:
+                    s += [k]
+        return dict[node]
