@@ -1,0 +1,20 @@
+class Solution:
+    # @return a list of lists of integers
+    def combineHelp(self, low, high, k):
+        if low == high or k == 0:
+            return []
+        elif k == 1:
+            return [[i] for i in range(low, high)]
+        else:
+            r = []
+            for i in range(low, high):
+                l = self.combineHelp(i+1, high, k-1)
+                for t in l:
+                    r += [[i] + t]
+            return r
+    
+    def combine(self, n, k):
+        if n == 0:
+            return []
+        else:
+            return self.combineHelp(1, n+1, k)
