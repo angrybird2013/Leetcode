@@ -1,0 +1,24 @@
+class Solution:
+    # @param candidates, a list of integers
+    # @param target, integer
+    # @return a list of lists of integers
+    def combinationSum2Help(self, candidates, target):
+        n, r = len(candidates), []
+        if n == 0:
+            return r
+        else:
+            for i in range(n):
+                if candidates[i] > target:
+                    break
+                elif candidates[i] == target:
+                    r += [[candidates[i]]]
+                    break
+                elif i == 0 or candidates[i] != candidates[i-1]:
+                    l = self.combinationSum2Help(candidates[i+1:], target - candidates[i])
+                    for t in l:
+                        r += [[candidates[i]] + t]
+            return r
+    
+    def combinationSum2(self, candidates, target):
+        list.sort(candidates)
+        return self.combinationSum2Help(candidates, target)
