@@ -1,0 +1,24 @@
+class Solution:
+    # @return an integer
+    def divideHelp(self, dividend, divisor):
+        if dividend == 0 or divisor == 0:
+            return [0, 0]
+        elif divisor < 0 and dividend < 0:
+            return self.divideHelp(-dividend, -divisor)
+        elif dividend < 0:
+            r = self.divideHelp(-dividend, divisor)
+            return [-r[0], r[1]]
+        elif divisor < 0:
+            r = self.divideHelp(dividend, -divisor)
+            return [-r[0], r[1]]
+        elif divisor > dividend:
+            return [0, dividend]
+        else:
+            r = self.divideHelp(dividend, divisor + divisor)
+            if r[1] >= divisor:
+                return [2 * r[0] + 1, r[1] - divisor]
+            else:
+                return [2 * r[0], r[1]]
+    
+    def divide(self, dividend, divisor):
+        return self.divideHelp(dividend, divisor)[0]
