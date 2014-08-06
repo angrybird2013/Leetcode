@@ -1,0 +1,28 @@
+class Solution:
+    # @return a list of lists of length 3, [[val1,val2,val3]]
+    def twoSum(self, num, target):
+        n, r = len(num), []
+        i, j = 0, n - 1
+        while i < j:
+            if num[i] + num[j] == target:
+                r += [[num[i], num[j]]]
+                i, j = i + 1, j - 1
+            elif num[i] + num[j] < target:
+                i += 1
+            else:
+                j -= 1
+        return r
+    
+    def threeSum(self, num):
+        list.sort(num)
+        n, r, i = len(num), [], 0
+        while i < n - 2:
+            if num[i] + num[i+1] + num[i+2] > 0:
+                break
+            else:
+                l = self.twoSum(num[i+1:], -num[i])
+                for t in l:
+                    if [num[i], t[0], t[1]] not in r:
+                        r += [[num[i], t[0], t[1]]]
+            i += 1
+        return r
