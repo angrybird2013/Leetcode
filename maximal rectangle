@@ -1,0 +1,32 @@
+class Solution:
+    # @param matrix, a list of lists of 1 length string
+    # @return an integer
+    def maximalHistogram(self, height):
+        t, n = 0, len(height)
+        lw, rw = n * [1], n * [1]
+        for i in range(n):
+            j, k = i - 1, n - i
+            while j >= 0 and height[j] >= height[i]:
+                j -= lw[j]
+            lw[i] = i - j
+            while k < n and height[k] >= height[n - 1 - i]:
+                k += rw[k]
+            rw[n - 1 - i] = k - (n - 1 - i)
+        for i in range(n):
+            t = max(t, height[i] * (lw[i] + rw[i] - 1))
+        return t
+
+    def maximalRectangle(self, matrix):
+        n = len(matrix)
+        if n == 0:
+            return 0
+        m = len(matrix[0])
+        t, r = 0, m * [0]
+        for i in range(n):
+            for j in range(m):
+                if matrix[i][j] == '1':
+                    r[j] = 1 + r[j]
+                else:
+                    r[j] = 0
+            t = max(t, self.maximalHistogram(r))
+        return t
