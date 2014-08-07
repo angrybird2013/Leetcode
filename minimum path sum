@@ -1,0 +1,15 @@
+class Solution:
+    # @param grid, a list of lists of integers
+    # @return an integer
+    def minPathSum(self, grid):
+        m, n = len(grid), len(grid[0])
+        d = 2 * [n * [0]]
+        for i in range(m):
+            for j in range(n):
+                if j == 0:
+                    d[i%2][j] = d[(i+1)%2][j] + grid[i][j]
+                elif i == 0:
+                    d[i%2][j] = d[i%2][j-1] + grid[i][j]
+                else:
+                    d[i%2][j] = min(d[(i+1)%2][j], d[i%2][j-1]) + grid[i][j]
+        return d[(m-1)%2][n-1]
