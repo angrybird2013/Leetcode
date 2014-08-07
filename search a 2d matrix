@@ -1,0 +1,33 @@
+class Solution:
+    # @param matrix, a list of lists of integers
+    # @param target, an integer
+    # @return a boolean
+    def searchLine(self, line, target):
+        n = len(line)
+        if n == 0:
+            return False
+        else:
+            p = line[n/2]
+            if p == target:
+                return True
+            elif p > target:
+                return self.searchLine(line[:n/2], target)
+            else:
+                return self.searchLine(line[n/2+1:], target)
+    
+    def searchMatrix(self, matrix, target):
+        m = len(matrix)
+        if m == 0:
+            return False
+        elif m == 1:
+            return self.searchLine(matrix[0], target)
+        else:
+            a, b = matrix[m/2][0], matrix[m/2][-1]
+            if a == target or b == target:
+                return True
+            elif a > target:
+                return self.searchMatrix(matrix[:m/2], target)
+            elif b < target:
+                return self.searchMatrix(matrix[m/2+1:], target)
+            else:
+                return self.searchLine(matrix[m/2], target)
