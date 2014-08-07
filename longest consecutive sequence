@@ -1,0 +1,20 @@
+class Solution:
+    # @param num, a list of integer
+    # @return an integer
+    def longestConsecutive(self, num):
+        t, n, dict = 1, len(num), {}
+        for i in range(n):
+            v, l, r = num[i], 0, 0
+            if v in dict:
+                continue
+            if v-1 in dict:
+                l = 1 + dict[v-1][0]
+            if v+1 in dict:
+                r = 1 + dict[v+1][1]
+            dict[v] = [l, r]
+            t = max(t, l+1+r)
+            if v-1 in dict:
+                dict[v-l][1] += r + 1
+            if v+1 in dict:
+                dict[v+r][0] += l + 1
+        return t
