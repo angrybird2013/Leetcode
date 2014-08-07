@@ -1,0 +1,19 @@
+class Solution:
+    # @param height, a list of integer
+    # @return an integer
+    def largestRectangleArea(self, height):
+        t, n = 0, len(height)
+        lw, rw = n * [1], n * [1]
+        for i in range(n):
+            j = i - 1
+            while j >= 0 and height[j] >= height[i]:
+                j -= lw[j]
+            lw[i] = i - j
+        for i in range(n - 1, -1, -1):
+            j = i + 1
+            while j < n and height[j] >= height[i]:
+                j += rw[j]
+            rw[i] = j - i
+        for i in range(n):
+            t = max(t, height[i] * (lw[i] + rw[i] - 1))
+        return t
