@@ -1,0 +1,12 @@
+class Solution:
+    # @param haystack, a string
+    # @param needle, a string
+    # @return a string or None
+    def strStr(self, haystack, needle):
+        m, n, i = len(haystack), len(needle), 0
+        while i < m - n + 1:
+            if haystack[i:i+n] == needle:
+                return haystack[i:]
+            else:
+                i += 1
+        return None
