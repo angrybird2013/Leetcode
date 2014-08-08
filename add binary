@@ -1,0 +1,20 @@
+class Solution:
+    # @param a, a string
+    # @param b, a string
+    # @return a string
+    def addBinary(self, a, b):
+        n, m = len(a), len(b)
+        if m > n:
+            return self.addBinary(b, a)
+        i, c, r = 0, 0, ""
+        while i < n:
+            if i < m:
+                t = ord(a[n-1-i]) + ord(b[m-1-i]) - 2 * ord('0') + c
+            else:
+                t = ord(a[n-1-i]) - ord('0') + c
+            c = t / 2
+            r = chr(t%2 + ord('0')) + r
+            i += 1
+        if c == 1:
+            r = '1' + r
+        return r
