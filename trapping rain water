@@ -1,0 +1,14 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def trap(self, A):
+        n = len(A)
+        if n <= 2:
+            return 0
+        elif A[0] > A[n-1]:
+            return self.trap(A[::-1])
+        j, r = 1, 0
+        while j < n - 1 and A[j] <= A[0]:
+            r += A[0] - A[j]
+            j += 1
+        return r + self.trap(A[j:])
