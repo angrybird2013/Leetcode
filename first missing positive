@@ -1,0 +1,25 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def firstMissingPositive(self, A):
+        i, n = 0, len(A)
+        while i < n:
+            if A[i] <= 0:
+                i += 1
+            elif A[i] > n:
+                A[i] = 0
+                i += 1
+            elif A[i] == i+1:
+                i += 1
+            else:
+                p = A[i] - 1
+                t = A[p]
+                A[p] = A[i]
+                if 1 <= t <= n and A[t-1] != t:
+                    A[i] = t
+                else:
+                    i += 1
+        for i in range(n):
+            if A[i] != i+1:
+                return i+1
+        return n+1
