@@ -1,0 +1,31 @@
+class Solution:
+    # @param s, a string
+    # @param dict, a set of string
+    # @return a list of strings
+    def wordMerge(self, i, n, r, s):
+        l = []
+        for t in r[i]:
+            w = s[i:t]
+            if t == n:
+                l += [w]
+            else:
+                for k in self.wordMerge(t, n, r, s):
+                    l += [w + " " + k]
+        return l
+        
+    def wordBreak(self, s, dict):
+        n, r = len(s), {}
+        r[n] = [""]
+        for i in range(n-1, -1, -1):
+            j = 1
+            while i + j <= n:
+                if s[i:i+j] in dict and (i+j) in r:
+                    if i in r:
+                        r[i] += [i+j]
+                    else:
+                        r[i] = [i+j]
+                j += 1
+        if 0 in r:
+            return self.wordMerge(0, n, r, s)
+        else:
+            return []
