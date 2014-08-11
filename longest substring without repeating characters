@@ -1,0 +1,16 @@
+class Solution:
+    # @return an integer
+    def lengthOfLongestSubstring(self, s):
+        i, n, d, t, j = 0, len(s), 100 * [-1], 0, 0
+        while i < n:
+            p = ord(s[i]) - 33
+            if d[p] < 0:
+                d[p] = i
+                t = max(t, i - j + 1)
+            else:
+                if j <= d[p] + 1:
+                    j = d[p] + 1
+                t = max(t, i - j + 1)
+                d[p] = i
+            i += 1
+        return max(t, n - j)
