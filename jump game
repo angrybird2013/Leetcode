@@ -1,0 +1,20 @@
+class Solution:
+    # @param A, a list of integers
+    # @return a boolean
+    def canJump(self, A):
+        n = len(A)
+        b = n * [False]
+        b[n-1] = True
+        for i in range(n-2, -1, -1):
+            if i + A[i] >= n:
+                b[i] = True
+                continue
+            j = 1
+            while j <= A[i]:
+                if b[i+j]:
+                    b[i] = True
+                    break
+                elif A[i] <= A[i+j] + j:
+                    break
+                j += 1
+        return b[0]
