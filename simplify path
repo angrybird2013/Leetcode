@@ -1,0 +1,21 @@
+class Solution:
+    # @param path, a string
+    # @return a string
+    def simplifyPath(self, path):
+        p = path.split('/')
+        j, n = 0, len(p)
+        for i in range(n):
+            if len(p[i]) == 0 or p[i] == ".":
+                continue
+            elif p[i] == "..":
+                j = max(0, j - 1)
+            else:
+                p[j] = p[i]
+                j += 1
+        if j == 0:
+            return "/"
+        else:
+            r = ""
+            for i in range(j):
+                r += "/" + p[i]
+            return r
