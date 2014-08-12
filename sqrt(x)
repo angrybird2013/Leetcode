@@ -1,0 +1,22 @@
+class Solution:
+    # @param x, an integer
+    # @return an integer
+    def sqrt(self, x):
+        high = 1
+        while high * high < x:
+            high *= 2
+        if high * high == x:
+            return high
+        low = high / 2
+        while high - low > 1:
+            mid = (low + high + 1) / 2
+            t = mid * mid
+            if t == x:
+                return mid
+            elif t < x:
+                low = mid + 1
+                if low * low > x:
+                    return low - 1
+            else:
+                high = mid - 1
+        return low
