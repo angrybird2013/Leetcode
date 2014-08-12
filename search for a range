@@ -1,0 +1,25 @@
+class Solution:
+    # @param A, a list of integers
+    # @param target, an integer to be searched
+    # @return a list of length 2, [index1, index2]
+    def searchRange(self, A, target):
+        n = len(A)
+        if n == 0:
+            return [-1, -1]
+        mid = A[n/2]
+        if target < mid:
+            return self.searchRange(A[:n/2], target)
+        elif target > mid:
+            t = self.searchRange(A[n/2+1:], target)
+            if t[0] == -1:
+                return t
+            else:
+                return [t[0] + n/2 + 1, t[1] + n/2 + 1]
+        else:
+            l, r = self.searchRange(A[:n/2], target), self.searchRange(A[n/2+1:], target)
+            t = [n/2, n/2]
+            if l[0] != -1:
+                t[0] = min(t[0], l[0])
+            if r[1] != -1:
+                t[1] = max(t[1], n/2 + 1 + r[1])
+            return t
