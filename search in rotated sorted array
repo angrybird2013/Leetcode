@@ -1,0 +1,41 @@
+class Solution:
+    # @param A, a list of integers
+    # @param target, an integer to be searched
+    # @return an integer
+    def search(self, A, target):
+        n = len(A)
+        if n < 3:
+            for i in range(n):
+                if A[i] == target:
+                    return i
+            return -1
+        low, mid, high = A[0], A[n/2], A[n-1]
+        if target == mid:
+            return n/2
+        if low < mid < high:
+            if target < mid:
+                return self.search(A[:n/2], target)
+            else:
+                t = self.search(A[n/2+1:], target)
+                if t < 0:
+                    return t
+                else:
+                    return n/2 + 1 + t
+        elif high < low < mid:
+            if target > mid or target < low:
+                t = self.search(A[n/2+1:], target)
+                if t < 0:
+                    return t
+                else:
+                    return n/2 + 1 + t
+            else:
+                return self.search(A[:n/2], target)
+        elif mid < high < low:
+            if target < mid or target >= low:
+                return self.search(A[:n/2], target)
+            else:
+                t = self.search(A[n/2+1:], target)
+                if t < 0:
+                    return t
+                else:
+                    return n/2 + 1 + t
