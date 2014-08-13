@@ -1,0 +1,22 @@
+class Solution:
+    # @param s, a string
+    # @return an integer
+    def isValid(self, i, n):
+        if n == 1:
+            return 1 <= i <= 9
+        else:
+            return 10 <= i <= 26
+    
+    def numDecodings(self, s):
+        n = len(s)
+        r = (n+1) * [0]
+        if n > 0:
+            r[n] = 1
+        for i in range(n-1, -1, -1):
+            t = 0
+            if self.isValid(int(s[i]), 1):
+                t += r[i+1]
+            if i + 2 <= n and self.isValid(int(s[i:i+2]), 2):
+                t += r[i+2]
+            r[i] = t
+        return r[0]
