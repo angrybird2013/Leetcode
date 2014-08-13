@@ -1,0 +1,32 @@
+class Solution:
+    # @return a boolean
+    def isValid(self, s):
+        j, n, r = 0, len(s), []
+        for i in range(n):
+            if s[i] == '(' or s[i] == '{' or s[i] == '[':
+                r += [s[i]]
+                j += 1
+            elif s[i] == ')':
+                if j == 0:
+                    return False
+                j -= 1
+                if r[j] != '(':
+                    return False
+                del r[j]
+            elif s[i] == '}':
+                if j == 0:
+                    return False
+                j -= 1
+                if r[j] != '{':
+                    return False
+                del r[j]
+            elif s[i] == ']':
+                if j == 0:
+                    return False
+                j -= 1
+                if r[j] != '[':
+                    return False
+                del r[j]
+            else:
+                return False
+        return j == 0
