@@ -1,0 +1,21 @@
+class Solution:
+    # @param num, a list of integer
+    # @return a list of lists of integer
+    def subsetHelp(self, S):
+        r, n = [], len(S)
+        if n == 0:
+            return [[]]
+        j = 1
+        while j < n and S[j] == S[0]:
+            j += 1
+        for t in self.subsetHelp(S[j:]):
+            for i in range(j+1):
+                r += [i * [S[0]] + t]
+        return r
+        
+    def subsetsWithDup(self, S):
+        n = len(S)
+        if n == 0:
+            return [[]]
+        list.sort(S)
+        return self.subsetHelp(S)
