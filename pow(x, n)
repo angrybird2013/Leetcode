@@ -1,0 +1,17 @@
+class Solution:
+    # @param x, a float
+    # @param n, a integer
+    # @return a float
+    def pow(self, x, n):
+        if n < 0:
+            return 1 / self.pow(x, -n)
+        elif n == 0:
+            return 1
+        elif n == 1:
+            return x
+        else:
+            i, t = 1, x
+            while 2 * i < n:
+                t = t * t
+                i = 2 * i
+            return t * self.pow(x, n - i)
