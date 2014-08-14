@@ -1,0 +1,20 @@
+class Solution:
+    # @param num, a list of integer
+    # @return a list of integer
+    def nextPermutation(self, num):
+        n = len(num)
+        i = n-1
+        while i > 0 and num[i] <= num[i-1]:
+            i -= 1
+        if i == 0:
+            return num[::-1]
+        else:
+            t, j = num[i-1], i
+            while j < n and num[j] > t:
+                j += 1
+            j -= 1
+            num[i-1], num[j] = num[j], t
+            for j in range((n-i)/2):
+                t = num[i+j]
+                num[i+j], num[n-1-j] = num[n-1-j], t
+            return num
