@@ -1,0 +1,25 @@
+class Solution:
+    # @return a list of lists of integer
+    def generateMatrix(self, n):
+        t = n * n
+        v, m = 1, [[t for j in range(n)] for i in range(n)]
+        x, y = 0, 0
+        while x < n / 2:
+            i, j = y, x
+            while j < n - x:
+                m[i][j] = v
+                j, v = j + 1, v + 1
+            i, j = y + 1, n - 1 - x
+            while i < n - 1 - y:
+                m[i][j] = v
+                i, v = i + 1, v + 1
+            i = n - 1 - y
+            while j >= x:
+                m[i][j] = v
+                j, v = j - 1, v + 1
+            i, j = n - 2 - y, x
+            while i > y:
+                m[i][j] = v
+                i, v = i - 1, v + 1
+            x, y = x + 1, y + 1
+        return m
