@@ -1,0 +1,38 @@
+class Solution:
+    # @param A a list of integers
+    # @param target an integer
+    # @return a boolean
+    def search(self, A, target):
+        n = len(A)
+        if n < 3:
+            for i in range(n):
+                if A[i] == target:
+                    return True
+            return False
+        else:
+            a, b, c = A[0], A[n/2], A[n-1]
+            if a == target or b == target or c == target:
+                return True
+            elif a == b or a == c or b == c:
+                return self.search(A[:n/2], target) or self.search(A[n/2+1:], target)
+            elif a < b < c:
+                if target < b:
+                    return self.search(A[:n/2], target)
+                else:
+                    return self.search(A[n/2+1:], target)
+            elif c < a < b:
+                if target > b:
+                    return self.search(A[n/2+1:], target)
+                elif target > a:
+                    return self.search(A[:n/2], target)
+                else:
+                    return self.search(A[n/2+1:], target)
+            elif b < c < a:
+                if target < b:
+                    return self.search(A[:n/2], target)
+                elif target < c:
+                    return self.search(A[n/2+1:], target)
+                else:
+                    return self.search(A[:n/2], target)
+            else:
+                return False
