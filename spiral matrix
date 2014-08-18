@@ -1,0 +1,24 @@
+class Solution:
+    # @param matrix, a list of lists of integers
+    # @return a list of integers
+    def order(self, matrix, x0, y0, x1, y1):
+        if y0 + 1 == y1:
+            return matrix[y0][x0:x1]
+        elif x0 + 1 == x1:
+            return [matrix[i][x0] for i in range(y0, y1)]            
+        a = [matrix[y0][i] for i in range(x0, x1-1)]
+        b = [matrix[i][x1-1] for i in range(y0, y1-1)]
+        c = [matrix[y1-1][i] for i in range(x1-1, x0, -1)]
+        d = [matrix[i][x0] for i in range(y1-1, y0, -1)]
+        return a + b + c + d
+        
+    def spiralOrder(self, matrix):
+        m = len(matrix)
+        if m == 0:
+            return []
+        n = len(matrix[0])
+        i, r, l = 0, [], min(m, n)
+        while i * 2 < l:
+            r += self.order(matrix, i, i, n-i, m-i)
+            i += 1
+        return r
