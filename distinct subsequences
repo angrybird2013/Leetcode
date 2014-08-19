@@ -1,0 +1,16 @@
+class Solution:
+    # @return an integer
+    def numDistinct(self, S, T):
+        m, n = len(S), len(T)
+        if m < n:
+            return 0
+        d = [[0 for j in range(n+1)] for i in range(m+1)]
+        for i in range(m+1):
+            d[i][0] = 1
+        for j in range(n):
+            for i in range(j, m):
+                if S[i] == T[j]:
+                    d[i+1][j+1] = d[i][j] + d[i][j+1]
+                else:
+                    d[i+1][j+1] = d[i][j+1]
+        return d[m][n]
