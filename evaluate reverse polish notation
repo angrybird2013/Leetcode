@@ -1,0 +1,31 @@
+class Solution:
+    # @param tokens, a list of string
+    # @return an integer
+    def evalRPN(self, tokens):
+        s, i, j, n = [], 0, 0, len(tokens)
+        while i < n:
+            t = tokens[i]
+            if t == '+':
+                a, b = s[j-1], s[j-2]
+                s[j-2] = a + b
+                j -= 1
+            elif t == '-':
+                a, b = s[j-1], s[j-2]
+                s[j-2] = b - a
+                j -= 1
+            elif t == '*':
+                a, b = s[j-1], s[j-2]
+                s[j-2] = a * b
+                j -= 1
+            elif t == '/':
+                a, b = s[j-1], s[j-2]
+                s[j-2] = int(float(b) / a)
+                j -= 1
+            else:
+                if j < len(s):
+                    s[j] = int(t)
+                else:
+                    s += [int(t)]
+                j += 1
+            i += 1
+        return s[j-1]
