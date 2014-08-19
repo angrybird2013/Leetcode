@@ -1,0 +1,36 @@
+class Solution:
+    def left(self, words, l, L):
+        str = ' '.join(words)
+        space = L - l - len(words) + 1
+        return str + space * " "
+    
+    def justify(self, words, l, L):
+        n, str, i = len(words), words[0], 1
+        if n == 1:
+            return self.left(words, l, L)
+        space = int((L - l) / (n - 1))
+        remain = L - l - space * (n - 1)
+        while i < n:
+            str += space * " "
+            if remain > 0:
+                str += ' '
+                remain -= 1
+            str += words[i]
+            i += 1
+        return str
+    
+    # @param words, a list of strings
+    # @param L, an integer
+    # @return a list of strings
+    def fullJustify(self, words, L):
+        i, j, n = 0, 0, len(words)
+        strs, t = [], 0
+        while i < n:
+            t += len(words[i])
+            if t + i - j > L:
+                strs += [self.justify(words[j:i], t - len(words[i]), L)]
+                j, t = i, 0
+            else:
+                i += 1
+        strs += [self.left(words[j:], t, L)]
+        return strs
