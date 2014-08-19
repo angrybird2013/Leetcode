@@ -1,0 +1,14 @@
+class Solution:
+    # @return a string
+    def convert(self, s, nRows):
+        n, str = len(s), ""
+        if nRows == 1:
+            return s
+        for i in range(nRows):
+            j = i
+            while j < n:
+                str += s[j]
+                if 0 < i < nRows-1 and j + (nRows - 1 - i) * 2 < n:
+                    str += s[j + (nRows - 1 - i) * 2]
+                j += nRows * 2 - 2
+        return str
