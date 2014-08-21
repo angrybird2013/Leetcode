@@ -1,0 +1,19 @@
+class Solution:
+    # @return an integer
+    def atoi(self, str):
+        sign, base, i, n = 1, 0, 0, len(str)
+        while i < n and str[i] == ' ':
+            i += 1
+        if i < n and (str[i] == '-' or str[i] == '+'):
+            if str[i] == '-':
+                sign = -1
+            i += 1
+        while i < n and str[i] >= '0' and str[i] <= '9':
+            if base > 214748364 or base == 214748364 and str[i] > '7':
+                if sign == 1:
+                    return 2147483647
+                else:
+                    return -2147483648
+            base = base * 10 + ord(str[i]) - ord('0')
+            i += 1
+        return base * sign
