@@ -1,0 +1,40 @@
+class Solution:
+    # @return a list of lists of length 4, [[val1,val2,val3,val4]]
+    def twoSum(self, num, target):
+        n = len(num)
+        r = []
+        i, j = 0, n - 1
+        while i < j:
+            if num[i] + num[j] > target:
+                j -= 1
+            elif num[i] + num[j] < target:
+                i += 1
+            else:
+                r += [[num[i], num[j]]]
+                i, j = i + 1, j - 1
+        return r
+    
+    def threeSum(self, num, target):
+        n = len(num)
+        r = []
+        for i in range(n-2):
+            if sum(num[i:i+3]) > target:
+                break
+            for t in self.twoSum(num[i+1:], target - num[i]):
+                r += [[num[i]] + t]
+        return r
+    
+    def fourSum(self, num, target):
+        list.sort(num)
+        n = len(num)
+        r = []
+        for i in range(n-3):
+            if sum(num[i:i+4]) > target:
+                break
+            elif num[i] + num[n-3] + num[n-2] + num[n-1] < target:
+                continue
+            for t in self.threeSum(num[i+1:], target - num[i]):
+                k = [num[i]] + t
+                if k not in r:
+                    r += [k]
+        return r
