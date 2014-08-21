@@ -1,0 +1,24 @@
+class Solution:
+    # @return an integer
+    def valid(self, r, i, j, n):
+        for k in range(n):
+            if r[k] == -1:
+                continue
+            elif i - r[k] == abs(k - j):
+                return False
+        return True
+    
+    def queens(self, r, i, n):
+        if i == n:
+            return 1
+        t = 0
+        for j in range(n):
+            if r[j] == -1 and self.valid(r, i, j, n):
+                r[j] = i
+                t += self.queens(r, i+1, n)
+                r[j] = -1
+        return t
+    
+    def totalNQueens(self, n):
+        r = n * [-1]
+        return self.queens(r, 0, n)
