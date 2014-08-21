@@ -1,6 +1,6 @@
 class Solution:
     # @return an integer
-    def close(self, num, target):
+    def twoSumClose(self, num, target):
         n = len(num)
         i, j = 0, n - 1
         g = num[i] + num[j]
@@ -21,7 +21,11 @@ class Solution:
         n = len(num)
         g = num[0] + num[1] + num[2]
         for i in range(n-2):
-            v = self.close(num[i+1:], target - num[i])
+            if sum(num[i:i+3]) - target > abs(g - target):
+                break
+            elif target - (num[i] + num[n-2] + num[n-1]) > abs(g - target):
+                continue
+            v = self.twoSumClose(num[i+1:], target - num[i])
             if abs(v + num[i] - target) < abs(g - target):
                 g = v + num[i]
         return g
