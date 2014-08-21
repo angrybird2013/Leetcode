@@ -1,0 +1,27 @@
+class Solution:
+    # @return an integer
+    def close(self, num, target):
+        n = len(num)
+        i, j = 0, n - 1
+        g = num[i] + num[j]
+        while i < j:
+            t = num[i] + num[j] 
+            if t > target:
+                j -= 1
+            elif t < target:
+                i += 1
+            else:
+                return target
+            if abs(t - target) < abs(g - target):
+                g = t
+        return g
+    
+    def threeSumClosest(self, num, target):
+        list.sort(num)
+        n = len(num)
+        g = num[0] + num[1] + num[2]
+        for i in range(n-2):
+            v = self.close(num[i+1:], target - num[i])
+            if abs(v + num[i] - target) < abs(g - target):
+                g = v + num[i]
+        return g
