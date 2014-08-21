@@ -1,0 +1,36 @@
+class Solution:
+    # @return a list of lists of string
+    def trans(self, m, n):
+        r = []
+        for i in range(n):
+            t = ""
+            for j in range(n):
+                if m[i][j] != 1:
+                    t += '.'
+                else:
+                    t += 'Q'
+            r += [t]
+        return r
+    
+    def valid(self, m, i, j, n):
+        for k in range(i):
+            if m[k][j] == 1 or (j - (i - k) >= 0 and m[k][j - i + k] == 1) or (j + (i - k) < n and m[k][j + i - k] == 1):
+                return False
+        return True
+    
+    def solve(self, m, i, n):
+        if i == n:
+            return [self.trans(m, n)]
+        else:
+            r = []
+            for j in range(n):
+                if self.valid(m, i, j, n):
+                    m[i][j] = 1
+                    for t in self.solve(m, i+1, n):
+                        r += [t]
+                    m[i][j] = 0
+            return r
+    
+    def solveNQueens(self, n):
+        m = [[0 for i in range(n)] for j in range(n)]
+        return self.solve(m, 0, n)
