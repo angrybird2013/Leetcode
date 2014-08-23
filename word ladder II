@@ -1,0 +1,40 @@
+class Solution:
+    # @param start, a string
+    # @param end, a string
+    # @param dict, a set of string
+    # @return a list of lists of string
+    def search(self, w, dict, next, m):
+        n = len(w)
+        for i in range(n):
+            for j in 'qwertyuiopasdfghjklzxcvbnm':
+                v = w[:i] + j + w[i+1:]
+                if v in dict:
+                    next.add(v)
+                    if v not in m:
+                        m[v] = set()
+                    m[v].add(w)
+    
+    def trace(self, start, end, m):
+        if start == end:
+            return [[end]]
+        else:
+            r = []
+            for t in m[start]:
+                l = self.trace(t, end, m)
+                for i in l:
+                    r += [i + [start]]
+            return r
+    
+    def findLadders(self, start, end, dict):
+        next, m = {start}, {}
+        r = []
+        while len(next) > 0 and len(r) == 0:
+            s = next
+            dict = dict.difference(next)
+            next = set()
+            for w in s:
+                if w == end:
+                    r += self.trace(end, start, m)
+                else:
+                    self.search(w, dict, next, m)
+        return r
