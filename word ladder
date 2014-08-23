@@ -16,7 +16,7 @@ class Solution:
                         dict.remove(v)
     
     def ladderLength(self, start, end, dict):
-        next, step, added = {start}, 1, set()
+        next, step = {start}, 1
         dict.remove(start)
         while len(next) > 0:
             s = next
