@@ -1,0 +1,16 @@
+class Solution:
+    # @param an integer
+    # @return a list of string
+    def parenthesis(self, s, k, n):
+        r = []
+        if len(s) == n * 2:
+            return [''.join(s)]
+        if k > 0:
+            r += self.parenthesis(s + [')'], k - 1, n)
+        if len(s) + k < n * 2:
+            r += self.parenthesis(s + ['('], k + 1, n)
+        return r
+    
+    def generateParenthesis(self, n):
+        s, k = [], 0
+        return self.parenthesis(s, k, n)
