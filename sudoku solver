@@ -1,0 +1,39 @@
+class Solution:
+    # @param board, a 9x9 2D array
+    # Solve the Sudoku by modifying the input board in-place.
+    # Do not return any value.
+    def valid(self, board, row, col):
+        l = {chr(i + ord('1')) for i in range(9)}
+        for i in range(9):
+            if board[i][col] in l:
+                l.remove(board[i][col])
+            if board[row][i] in l:
+                l.remove(board[row][i])
+        for i in range(3):
+            for j in range(3):
+                if board[row/3*3 + i][col/3*3 + j] in l:
+                    l.remove(board[row/3*3 + i][col/3*3 + j])
+        return l
+    
+    def solve(self, board, row, col, empty):
+        if empty == 0:
+            return True
+        elif col == 9:
+            return self.solve(board, row+1, 0, empty)
+        if board[row][col] == '.':
+            for t in self.valid(board, row, col):
+                board[row][col] = t
+                if self.solve(board, row, col+1, empty-1):
+                    return True
+            board[row][col] = '.'
+            return False
+        else:
+            return self.solve(board, row, col+1, empty)
+    
+    def solveSudoku(self, board):
+        empty = 0
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.':
+                    empty += 1
+        self.solve(board, 0, 0, empty)
