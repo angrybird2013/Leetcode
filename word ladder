@@ -5,14 +5,12 @@ class Solution:
     # @return an integer
     def search(self, w, dict, next):
         n = len(w)
-        c = [chr(i) for i in range(ord('a'), ord('z') + 1)]
         for i in range(n):
             t = w[i]
-            for j in c:
-                if j != t:
-                    v = w[:i] + j + w[i+1:]
-                    if v in dict:
-                        next.add(v)
+            for j in 'qwertyuiopasdfghjklzxcvbnm':
+                v = w[:i] + j + w[i+1:]
+                if v in dict:
+                    next.add(v)
     
     def ladderLength(self, start, end, dict):
         next, step = {start}, 1
