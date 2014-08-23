@@ -13,13 +13,12 @@ class Solution:
                     v = w[:i] + j + w[i+1:]
                     if v in dict:
                         next.add(v)
-                        dict.remove(v)
     
     def ladderLength(self, start, end, dict):
         next, step = {start}, 1
-        dict.remove(start)
         while len(next) > 0:
             s = next
+            dict = dict.difference(next)
             next = set()
             for w in s:
                 if w == end:
