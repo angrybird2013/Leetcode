@@ -1,0 +1,19 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def jump(self, A):
+        n = len(A)
+        if n <= 1:
+            return 0
+        r, step = [0, 0], 0
+        for i in range(n-1):
+            if i > r[step]:
+                step += 1
+                r += [0]
+                if r[step] >= n - 1:
+                    return step
+            r[step+1] = max(r[step+1], i + A[i])
+        if r[step + 1] >= n - 1:
+            return step + 1
+        else:
+            return -1
