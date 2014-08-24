@@ -1,0 +1,18 @@
+class Solution:
+    # @return an integer
+    def maxArea(self, height):
+        n = len(height)
+        i, j, p1, p2 = 0, n - 1, 0, n - 1
+        v = min(height[p1], height[p2]) * (p2 - p1)
+        while i < j:
+            if height[p1] < height[p2]:
+                i += 1
+                if height[i] > height[p1]:
+                    p1 = i
+                    v = max(v, min(height[p1], height[p2]) * (p2 - p1))
+            else:
+                j -= 1
+                if height[j] > height[p2]:
+                    p2 = j
+                    v = max(v, min(height[p1], height[p2]) * (p2 - p1))
+        return v
