@@ -1,0 +1,41 @@
+class Solution:
+    # @param s, an input string
+    # @param p, a pattern string
+    # @return a boolean
+    def equal(self, a, b):
+        if len(a) != len(b):
+            return False
+        i, n = 0, len(a)
+        while i < n and (b[i] == '?' or a[i] == b[i]):
+            i += 1
+        return i == n
+    
+    def locate(self, s, w):
+        n, m = len(s), len(w)
+        for i in range(n-m+1):
+            if self.equal(s[i:i+m], w):
+                return i
+        return -1
+    
+    def match(self, s, p):
+        n, i = len(p), 0
+        if n == 0:
+            return len(s) == 0
+        while i < n and p[i] == "":
+            i += 1
+        if i == n:
+            return True
+        elif i == n-1:
+            return (i > 0 or len(s) == len(p[i])) and self.equal(s[-len(p[i]):], p[i])
+        else:
+            k1 = self.locate(s, p[i])
+            if k1 < 0 or i == 0 and k1 != 0:
+                return False
+            else:
+                return self.match(s[k1 + len(p[i]):], p[i+1:])
+    
+    def isMatch(self, s, p):
+        if len(p) == 0:
+            return len(s) == 0
+        w = "**".join(p.split('*')).split('*')
+        return self.match(s, w)
