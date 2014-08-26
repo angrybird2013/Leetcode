@@ -1,0 +1,39 @@
+class LRUCache:
+
+    # @param capacity, an integer
+    def __init__(self, capacity):
+        self.cache = {}
+        self.times = {}
+        self.q = []
+        self.c = capacity
+
+    # @return an integer
+    def get(self, key):
+        if key in self.cache:
+            self.q += [key]
+            self.times[key] += 1
+            return self.cache[key]
+        else:
+            return -1
+
+    # @param key, an integer
+    # @param value, an integer
+    # @return nothing
+    def set(self, key, value):
+        self.q += [key]
+        if key in self.cache:
+            self.cache[key] = value
+            self.times[key] += 1
+        else:
+            self.cache[key] = value
+            self.times[key] = 1
+            i = 0
+            while len(self.cache) > self.c:
+                k = self.q[i]
+                if self.times[k] == 1:
+                    del self.cache[k]
+                    del self.times[k]
+                else:
+                    self.times[k] -= 1
+                i += 1
+            self.q = self.q[i:]
