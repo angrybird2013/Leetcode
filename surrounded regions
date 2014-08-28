@@ -1,0 +1,37 @@
+class Solution:
+    # @param board, a 2D array
+    # Capture all regions by modifying the input board in-place.
+    # Do not return any value.
+    def check(self, board, i, j, m, n):
+        s = [[i, j]]
+        while len(s) > 0:
+            [i, j], s = s[0], s[1:]
+            if i < 0 or i >= m or j < 0 or j >= n:
+                continue
+            if board[i][j] == 0 or board[i][j] == 1:
+                continue
+            elif board[i][j] == 'X':
+                board[i][j] = 1
+            else:
+                board[i][j] = 0
+                s += [[i-1, j], [i+1, j], [i, j-1], [i, j+1]]
+    
+    def solve(self, board):
+        m = len(board)
+        if m <= 2:
+            return
+        n = len(board[0])
+        if n <= 2:
+            return
+        for i in range(m):
+            self.check(board, i, 0, m, n)
+            self.check(board, i, n-1, m, n)
+        for j in range(n):
+            self.check(board, 0, j, m, n)
+            self.check(board, m-1, j, m, n)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 0:
+                    board[i][j] = 'O'
+                else:
+                    board[i][j] = 'X'
