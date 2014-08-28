@@ -1,0 +1,43 @@
+class Solution:
+    # @param s, a string
+    # @return a boolean
+    def integer(self, s, sign = False, empty = False):
+        if len(s) == 0:
+            return empty
+        elif sign and s[0] in '-+':
+            return self.integer(s[1:], False, empty)
+        else:
+            for t in s:
+                if t not in '0123456789':
+                    return False
+            return True
+    
+    def number(self, s):
+        if len(s) == 0:
+            return False
+        s = s.split('.')
+        if len(s) == 1:
+            return self.integer(s[0], True, False)
+        elif len(s) == 2:
+            if len(s[0]) == 0 and len(s[1]) == 0:
+                return False
+            elif len(s[1]) == 0:
+                return self.integer(s[0], True, False)
+            else:
+                return self.integer(s[0], True, True) and self.integer(s[1], False, True)
+        else:
+            return False
+        
+    def isNumber(self, s):
+        s = s.strip()
+        if len(s) == 0:
+            return False
+        s = s.split('e')
+        if len(s) == 0:
+            return False
+        elif len(s) == 1:
+            return self.number(s[0])
+        elif len(s) == 2:
+            return self.number(s[0]) and self.integer(s[1], True, False)
+        else:
+            return False
