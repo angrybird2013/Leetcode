@@ -1,0 +1,23 @@
+class Solution:
+    # @return a boolean
+    def isScramble(self, s1, s2):
+        if len(s1) != len(s2):
+            return False
+        n = len(s1)
+        d = [[[False for i in range(n)] for i in range(n)] for i in range(n)]
+        for l in range(n):
+            for i in range(n-l):
+                for j in range(n-l):
+                    if l == 0:
+                        d[i][j][l] = s1[i] == s2[j]
+                    elif s1[i:i+l+1] == s2[j:j+l+1]:
+                        d[i][j][l] = True
+                    else:
+                        for k in range(l):
+                            if d[i][j][k] and d[i+k+1][j+k+1][l-k-1]:
+                                d[i][j][l] = True
+                                break
+                            elif d[i][j+l-k][k] and d[i+k+1][j][l-k-1]:
+                                d[i][j][l] = True
+                                break
+        return d[0][0][n-1]
