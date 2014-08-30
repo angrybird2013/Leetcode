@@ -1,0 +1,24 @@
+class Solution:
+    # @param s, a string
+    # @return an integer
+    def minCut(self, s):
+        n = len(s)
+        if n <= 1:
+            return 0
+        t = '^#' + '#'.join(list(s)) + '#$'
+        n = len(t)
+        cut, p, r, c = n * [n], n * [0], 0, 0
+        cut[0] = 0
+        cut[1] = 0
+        for i in range(1, n-1):
+            j = 2 * c - i
+            if r > i:
+                p[i] = min(r-i, p[j])
+            while t[i+1+p[i]] == t[i-1-p[i]]:
+                cut[i + p[i]] = min(cut[i + p[i]], cut[i - p[i]] + 1)
+                p[i] += 1
+            if i + p[i] > r:
+                c = i
+                r = i + p[i]
+            cut[i + p[i]] = min(cut[i + p[i]], cut[i - p[i]] + 1)                
+        return cut[n-2] - 1
