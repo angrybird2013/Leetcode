@@ -1,0 +1,20 @@
+class Solution:
+    # @return a float
+    def find(self, A, m, B, n, k):
+        if m > n:
+            return self.find(B, n, A, m, k)
+        if m == 0:
+            return B[k-1]
+        if k == 1:
+            return min(A[0], B[0])
+        i, j = min(m, k/2), min(n, k/2)
+        if A[i-1] < B[j-1]:
+            return self.find(A[i:], m - i, B, n, k - i)
+        else:
+            return self.find(A, m, B[j:], n - j, k - j)
+    
+    def findMedianSortedArrays(self, A, B):
+        m, n = len(A), len(B)
+        p1 = (m + n + 1) / 2
+        p2 = (m + n + 2) / 2
+        return (self.find(A, m, B, n, p1) + self.find(A, m, B, n, p2)) / 2.0
