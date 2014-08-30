@@ -1,0 +1,34 @@
+class Solution:
+    # @return a boolean
+    def cut(self, p):
+        w = []
+        for c in p:
+            if c == '*':
+                w[-1][1] = True
+            else:
+                w += [[c, False]]
+        return w
+    
+    def match(self, s, w):
+        n, r, i = len(s), [], 0
+        if w[1]:
+            r += [0]
+        if n == 0:
+            return r
+        while i < n and (w[0] == '.' or s[i] == w[0]):
+            i += 1
+            r += [i]
+            if not w[1]:
+                break
+        return r
+    
+    def isMatch(self, s, p):
+        n, w = len(s), self.cut(p)
+        d = [[False for i in range(len(w)+1)] for i in range(n+1)]
+        d[0][0] = True
+        for j in range(len(w)):
+            for i in range(n+1):
+                if d[i][j]:
+                    for k in self.match(s[i:], w[j]):
+                        d[i+k][j+1] = True
+        return d[-1][-1]
