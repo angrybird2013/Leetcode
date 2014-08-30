@@ -1,0 +1,28 @@
+class Solution:
+    # @param S, a string
+    # @param L, a list of string
+    # @return a list of integer
+    def valid(self, str, s, n, w):
+        added = {}
+        for i in range(n):
+            t = str[i * w:(i + 1) * w]
+            if t in s and t not in added:
+                added[t] = 1
+            elif t in s and s[t] > added[t]:
+                added[t] += 1
+            else:
+                return False
+        return True
+    
+    def findSubstring(self, S, L):
+        r, n, l, w = [], len(S), len(L), len(L[0])
+        s = {}
+        for t in L:
+            if t in s:
+                s[t] += 1
+            else:
+                s[t] = 1
+        for i in range(n + 1 - l * w):
+            if S[i:i+w] in s and self.valid(S[i:i+l*w], s, l, w):
+                r += [i]
+        return r
