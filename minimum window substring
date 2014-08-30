@@ -1,0 +1,29 @@
+class Solution:
+    # @return a string
+    def minWindow(self, S, T):
+        n, q, m, k = len(S), [], 0, 0
+        d, s = 60 * [0], 60 * [False]
+        r = ""
+        for t in T:
+            p = ord(t) - ord('A')
+            d[p] += 1
+            if d[p] == 1:
+                k += 1
+                s[p] = True
+        for i in range(n):
+            c = ord(S[i]) - ord('A')
+            if s[c]:
+                q += [[c, i]]
+                d[c] -= 1
+                if d[c] == 0:
+                    k -= 1
+                    while k == 0 and len(q) > m:
+                        [c, j] = q[m]
+                        if d[c] <= 0:
+                            if len(r) == 0 or i + 1 - j < len(r):
+                                r = S[j:i + 1]
+                            d[c] += 1
+                            if d[c] == 1:
+                                k += 1
+                            m += 1
+        return r
