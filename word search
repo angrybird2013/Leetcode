@@ -1,0 +1,24 @@
+class Solution:
+    # @param board, a list of lists of 1 length string
+    # @param word, a string
+    # @return a boolean
+    def dfs(self, board, x, y, word, visited):
+        if len(word) == 0:
+            return True
+        elif x >= 0 and y >= 0 and x < len(board) and y < len(board[0]) and not visited[x][y] and board[x][y] == word[0]:
+            visited[x][y] = True
+            t = [[x-1, y], [x+1, y], [x, y-1], [x, y+1]]
+            for a, b in t:
+                if self.dfs(board, a, b, word[1:], visited):
+                    return True
+            visited[x][y] = False
+        return False
+    
+    def exist(self, board, word):
+        m, n = len(board), len(board[0])
+        visited = [[False for i in range(n)] for j in range(m)]
+        for x in range(m):
+            for y in range(n):
+                if self.dfs(board, x, y, word, visited):
+                    return True
+        return False
