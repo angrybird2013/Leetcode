@@ -1,0 +1,21 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def max2(self, a, b):
+        if a > b:
+            return a
+        else:
+            return b
+    def max3(self, a, b, c):
+        return self.max2(self.max2(a, b), c)
+    
+    def maxProduct(self, A):
+        low, high, r = A[0], A[0], A[0]
+        n = len(A)
+        for i in range(1, n):
+            tmpLow = low * A[i]
+            tmpHigh = high * A[i]
+            high = self.max3(tmpHigh, tmpLow, A[i])
+            low = -self.max3(-tmpLow, -tmpHigh, -A[i])
+            r = self.max2(r, high)
+        return r
